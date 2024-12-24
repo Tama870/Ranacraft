@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rana Craft</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&family=Squada+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Squada One', cursive, 'Rock Salt', sans-serif; /* Combining graffiti fonts */
+            margin: 0;
+            padding: 0;
+            background-color: #ffe4e1; /* Soft pink background */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffffff; /* White content area */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .login-container, .payment-container, .confirmation-container, .buket-container, .receipt-container {
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: #ff69b4; /* Vibrant pink text */
+            font-family: 'Squada One', cursive;
+            font-size: 2em;
+            text-transform: uppercase;
+        }
+
+        button {
+            background-color: #ff69b4; /* Pink button */
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #ff1493; /* Darker pink on hover */
+        }
+
+        input, select {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ff69b4;
+            border-radius: 5px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #ff69b4;
+            padding: 10px;
+        }
+
+        nav button {
+            margin: 0 10px;
+            background-color: #ffffff;
+            color: #ff69b4;
+            border: 2px solid #ff69b4;
+            font-family: 'Rock Salt', cursive;
+        }
+
+        nav button:hover {
+            background-color: #ff69b4;
+            color: #ffffff;
+        }
+
+        .buket-item {
+            margin: 20px auto;
+            padding: 15px;
+            border: 1px solid #ff69b4;
+            border-radius: 10px;
+            background-color: #fff0f5;
+            text-align: center;
+        }
+
+        .buket-item img {
+            width: 100%;
+            max-width: 200px;
+            border-radius: 10px;
+        }
+
+        #main-menu {
+            display: none; /* Initially hidden */
+        }
+
+        #login-page {
+            display: block; /* Show login page initially */
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="login-page" class="container">
+        <div class="login-container">
+            <h2>Login</h2>
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button onclick="login()">Login</button>
+        </div>
+    </div>
+
+    <!-- Main Menu (Visible after login) -->
+    <div id="main-menu" class="container">
+        <nav>
+            <button onclick="showSection('katalog')">Katalog</button>
+            <button onclick="showSection('konfirmasi')">Konfirmasi Pemesanan</button>
+            <button onclick="showSection('pembayaran')">Pembayaran</button>
+        </nav>
+
+        <!-- Katalog Section -->
+        <section id="katalog" style="display: none;">
+            <h1>Katalog Buket</h1>
+            <div class="buket-container">
+                <div class="buket-item">
+                    <img src="buket-bunga.jpg" alt="Buket Bunga">
+                    <h3>Buket Bunga</h3>
+                    <label for="harga-bunga">Pilih Harga:</label>
+                    <select id="harga-bunga">
+                        <option value="25000">Rp 25.000</option>
+                        <option value="50000">Rp 50.000</option>
+                        <option value="75000">Rp 75.000</option>
+                        <option value="100000">Rp 100.000</option>
+                        <option value="200000">Rp 200.000</option>
+                    </select>
+                    <button onclick="addToConfirmation('Buket Bunga', document.getElementById('harga-bunga').value)">Pesan Sekarang</button>
+                </div>
+                <div class="buket-item">
+                    <img src="buket-boneka.jpg" alt="Buket Boneka">
+                    <h3>Buket Boneka</h3>
+                    <label for="harga-boneka">Pilih Harga:</label>
+                    <select id="harga-boneka">
+                        <option value="35000">Rp 35.000</option>
+                        <option value="50000">Rp 50.000</option>
+                        <option value="75000">Rp 75.000</option>
+                        <option value="85000">Rp 85.000</option>
+                    </select>
+                    <button onclick="addToConfirmation('Buket Boneka', document.getElementById('harga-boneka').value)">Pesan Sekarang</button>
+                </div>
+                <div class="buket-item">
+                    <img src="buket-uang.jpg" alt="Buket Uang">
+                    <h3>Buket Uang</h3>
+                    <label for="harga-uang">Pilih Jumlah:</label>
+                    <select id="harga-uang">
+                        <option value="25000">10 lembar - Rp 25.000</option>
+                        <option value="35000">20 lembar - Rp 35.000</option>
+                        <option value="50000">30 lembar - Rp 50.000</option>
+                        <option value="75000">40 lembar - Rp 75.000</option>
+                        <option value="100000">50 lembar - Rp 100.000</option>
+                    </select>
+                    <button onclick="addToConfirmation('Buket Uang', document.getElementById('harga-uang').value)">Pesan Sekarang</button>
+                </div>
+                <div class="buket-item">
+                    <img src="buket-snack.jpg" alt="Buket Snack">
+                    <h3>Buket Snack</h3>
+                    <label for="harga-snack">Pilih Harga:</label>
+                    <select id="harga-snack">
+                        <option value="20000">Rp 20.000</option>
+                        <option value="35000">Rp 35.000</option>
+                        <option value="50000">Rp 50.000</option>
+                        <option value="75000">Rp 75.000</option>
+                        <option value="100000">Rp 100.000</option>
+                    </select>
+                    <button onclick="addToConfirmation('Buket Snack', document.getElementById('harga-snack').value)">Pesan Sekarang</button>
+                </div>
+                <div class="buket-item">
+                    <img src="buket-choco.jpg" alt="Buket Cokelat">
+                    <h3>Buket Cokelat</h3>
+                    <label for="harga-choco">Pilih Harga:</label>
+                    <select id="harga-choco">
+                        <option value="30000">Rp 30.000</option>
+                        <option value="45000">Rp 45.000</option>
+                        <option value="60000">Rp 60.000</option>
+                        <option value="75000">Rp 75.000</option>
+                        <option value="100000">Rp 100.000</option>
+                    </select>
+                    <button onclick="addToConfirmation('Buket Cokelat', document.getElementById('harga-choco').value)">Pesan Sekarang</button>
+                </div>
+                <div class="buket-item">
+                    <img src="buket-fruit.jpg" alt="Buket Buah">
+                    <h3>Buket Buah</h3>
+                    <label for="harga-fruit">Pilih Harga:</label>
+                    <select id="harga-fruit">
+                        <option value="40000">Rp 40.000</option>
+                        <option value="60000">Rp 60.000</option>
+                        <option value="80000">Rp 80.000</option>
+                        <option value="100000">Rp 100.000</option>
+                        <option value="120000">Rp 120.000</option>
+                    </select>
+                    <button onclick="addToConfirmation('Buket Buah', document.getElementById('harga-fruit').value)">Pesan Sekarang</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Konfirmasi Pemesanan Section -->
+        <section id="konfirmasi" style="display: none;">
+            <h1>Konfirmasi Pemesanan</h1>
+            <div class="confirmation-container">
+                <div id="order-summary">Rincian Pesanan Anda</div>
+                <button onclick="proceedToPayment()">Lanjut ke Pembayaran</button>
+            </div>
+        </section>
+
+        <!-- Pembayaran Section -->
+        <section id="pembayaran" style="display: none;">
+            <h1>Pembayaran</h1>
+            <div class="payment-container">
+                <h2>Formulir Pembayaran</h2>
+                <select id="payment-method" required>
+                    <option value="">Pilih Metode Pembayaran</option>
+                    <option value="transfer-bank">Transfer Bank</option>
+                    <option value="ovo">Ovo</option>
+                    <option value="dana">Dana</option>
+                </select>
+                <input type="text" id="account-name" placeholder="Nama Pemilik Rekening" required>
+                <button onclick="showReceipt()">Bayar Sekarang</button>
+            </div>
+        </section>
+
+        <!-- Receipt Section -->
+        <section id="receipt" style="display: none;">
+            <h1>Struk Pembayaran</h1>
+            <div class="receipt-container">
+                <p id="receipt-details"></p>
+                <button onclick="showSection('katalog')">Kembali ke Katalog</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Simulate login functionality
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === 'admin' && password === 'password') { // Replace with real validation
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('main-menu').style.display = 'block';
+            } else {
+                alert('Login gagal! Periksa username dan password Anda.');
+            }
+        }
+
+        // Show specific section in main menu
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => section.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        // Add to confirmation and navigate to confirmation page
+        function addToConfirmation(item, price) {
+            const orderSummary = document.getElementById('order-summary');
+            orderSummary.innerHTML = `<p>Pesanan: ${item}</p><p>Harga: Rp ${parseInt(price).toLocaleString()}</p>`;
+            showSection('konfirmasi');
+        }
+
+        // Proceed to payment functionality
+        function proceedToPayment() {
+            showSection('pembayaran');
+        }
+
+        // Show receipt functionality
+        function showReceipt() {
+            const paymentMethod = document.getElementById('payment-method').value;
+            const accountName = document.getElementById('account-name').value;
+
+            if (paymentMethod && accountName) {
+                const receiptDetails = document.getElementById('receipt-details');
+                receiptDetails.innerHTML = `
+                    <p><strong>Metode Pembayaran:</strong> ${paymentMethod}</p>
+                    <p><strong>Nama Pemilik Rekening:</strong> ${accountName}</p>
+                    <p><strong>Status:</strong> Pembayaran Berhasil</p>
+                `;
+                showSection('receipt');
+            } else {
+                alert('Mohon lengkapi data pembayaran.');
+            }
+        }
+    </script>
+</body>
+</html>
